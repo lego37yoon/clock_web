@@ -13,8 +13,10 @@
   let tasks = $state<Task[]>([]);
   let taskIndex = $state(0);
 
-  let detected = $state(false);
-  let detectTimeout = $state<number|undefined>(undefined);
+  let detacted = $state(false);
+  let detactTimeout = $state<number|undefined>(undefined);
+  let sleepMode = $state(false);
+  let sleepModeTimeout = $state<number|undefined>(undefined);
 
   let alarmList = $state<RemoteAlarm[]>();
   let alarmSrc = $state<string>();
@@ -75,16 +77,14 @@
         temperature = data.temperature;
         humidity = data.humidity;
       } else if (data.type === "person_detection" && data.message === "Person Detected") {
-        detected = true;
-        if (detectTimeout) {
-          clearTimeout(detectTimeout);
-          detectTimeout = setTimeout(() => {
-            detected = false;
-          }, 600000);
-        } else {
-          detectTimeout = setTimeout(() => {
-            detected = false;
-          }, 600000);
+        if (!sleepMode) {
+          detacted = true;
+          if (detactTimeout) {
+            clearTimeout(detactTimeout);
+            detactTimeout = setTimeout(() => { detacted = false }, 5000);
+          } else {
+            detactTimeout = setTimeout(() => { detacted = false }, 5000);
+          }
         }
       }
     }
@@ -205,8 +205,23 @@
   </section>
   {#if focusMode}
   <section id="focusMode">
-    <div class={`p-2 shadow-sm rounded-md w-full bg-white ${detected ? '' : "warn"}`}>
-      {detected ? "집중 중입니다." : "현재 집중 중이지 않습니다."}
+    <div class={`p-2 shadow-sm rounded-md w-full flex justify-between bg-white ${detacted || sleepMode ? '' : "warn"}`}>
+      <span>
+        {detacted && !sleepMode ? "집중 중입니다." : sleepMode ? "휴식 중입니다" : "현재 집중 중이지 않습니다."}
+      </span>
+      <button onclick={() => { 
+        if (sleepMode) {
+          sleepMode = false;
+          clearTimeout(sleepModeTimeout);
+        } else {
+          sleepMode = true;
+          sleepModeTimeout = setTimeout(() => { sleepMode = false }, 600000); 
+      }}} class="flex bg-gray-50 items-center">
+        <span class="material-symbols-outlined">
+          airline_seat_recline_extra
+        </span>
+        10분 휴식
+      </button>
     </div>
   </section>
   {:else}
