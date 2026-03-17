@@ -1,38 +1,18 @@
-# sv
+# TodoSyncClock [Web]
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+2025학년도 1학기 임베디드소프트웨어 : Raspberry Pi 시계 화면
 
-## Creating a project
+## 설치 및 실행
 
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+`npm install` (또는 `pnpm install`, `yarn` 사용 가능)로 패키지 설치 후, 개발 서버를 실행하여 시작할 수 있습니다.
 
 ```bash
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
+> [!WARNING]
+> 본 소프트웨어의 배경을 정상적으로 로드하기 위해서는 bg.jpeg라는 이름의 사진이 /static 폴더 아래 위치해야 합니다.
 
-## Building
+## 오픈소스 라이선스
 
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+[TailwindCSS](https://github.com/tailwindlabs/tailwindcss) - MIT License
+[SvelteKit](https://github.com/sveltejs/kit) / [Svelte](https://github.com/sveltejs/svelte) / [Svelte-Check](https://github.com/sveltejs/language-tools) - MIT License
